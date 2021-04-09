@@ -59,8 +59,8 @@
   * connect api to chat
 
 Mock images
-![Alt text](images/appMock.png)
-![Alt text](images/appMock2.png)
+![Main screen](images/appMock.png)
+![Registration](images/appMock2.png)
 
 ## Authors
 - [Nir Parisian](#)
