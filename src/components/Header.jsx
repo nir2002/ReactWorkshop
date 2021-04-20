@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import userPlaceHolder from "../assets/userPlaceHolder.png";
+import addChat from "../assets/addChat.svg";
 
-export default class Header extends Component {
-    render() {
-        return (
-            <div className="header">
-                Header
-            </div>
-        )
-    }
+export default function Header({ image }) {
+  return (
+    <div className="header">
+      <img src={image ?? userPlaceHolder} alt="user" />
+      <img src={addChat} alt="user" />
+    </div>
+  );
 }
