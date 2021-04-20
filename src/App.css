@@ -60,8 +60,19 @@ body {
 
 .chat-messages {
   flex: 80%;
-  background-image: url("assets/bg.png");
-  background-repeat: repeat;
+  position: relative;
+}
+
+.chat-messages::after {
+  content: "";
+  background-image: url("bg.png");
+  /* background-repeat: repeat; */
+  opacity: 0.1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
 }
 
 .chat-input > input {
