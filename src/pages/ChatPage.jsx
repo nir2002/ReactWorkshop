@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import ChatList from "../components/ChatList";
 import Search from "../components/Search";
 import ChatHeader from "../components/Header";
+import ChatMessages from "../components/ChatMessages";
+import ChatBoardHeader from "../components/ChatBoardHeader";
+import ChatInput from "../components/ChatInput";
 
 const CHAT_GROUP_LIST = [
   { id: "11", name: "Michael Hasin", lastSeen: 1618224765444 },
   { id: "12", name: "Nir Parisian", lastSeen: 1612130400000 },
   { id: "13", name: "Cohen Family", lastSeen: 1620778800000 },
-  { id: "23", name: "Amzaleg Family", lastSeen: new Date().getTime() },
+  { id: "23", name: "Amzaleg Family", lastSeen: new Date().getTime() }
 ];
 
 function useSearchResults(defaultIds) {
@@ -41,7 +44,15 @@ export default function ChatPage() {
           selected={selectedRowId}
         />
       </section>
-      <section className="chat-board-section"></section>
+
+      <section className="chat-board-section">
+        <ChatBoardHeader
+          title="person/group name"
+          subtitle="last seen/members"
+        />
+        <ChatMessages />
+        <ChatInput />
+      </section>
     </div>
   );
 }
