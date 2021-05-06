@@ -65,7 +65,7 @@ body {
 
 .chat-messages::after {
   content: "";
-  background-image: url("bg.png");
+  background-image: url("assets/bg.png");
   background-repeat: repeat;
   opacity: 0.1;
   top: 0;
