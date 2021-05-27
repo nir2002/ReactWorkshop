@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ChatList from "../components/ChatList";
-import Search from "../components/Search";
+import { Search } from "../components/Input";
 import ChatHeader from "../components/Header";
 import ChatMessages from "../components/ChatMessages";
 import ChatBoardHeader from "../components/ChatBoardHeader";
@@ -10,7 +10,7 @@ const CHAT_GROUP_LIST = [
   { id: "11", name: "Michael Hasin", lastSeen: 1618224765444 },
   { id: "12", name: "Nir Parisian", lastSeen: 1612130400000 },
   { id: "13", name: "Cohen Family", lastSeen: 1620778800000 },
-  { id: "23", name: "Amzaleg Family", lastSeen: new Date().getTime() }
+  { id: "23", name: "Amzaleg Family", lastSeen: new Date().getTime() },
 ];
 
 function useSearchResults(defaultIds) {
@@ -37,7 +37,7 @@ export default function ChatPage() {
     <div className="main-content-pane">
       <section className="chat-list-section">
         <ChatHeader />
-        <Search onChange={onSearchChange} />
+        <Search onChange={(e) => onSearchChange(e.target.value)} />
         <ChatList
           chatGroup={CHAT_GROUP_LIST.filter(({ id }) => serachIds.includes(id))}
           onRowClick={setSelectedRowId}
