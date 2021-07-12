@@ -16,24 +16,38 @@ const firebaseConfig = {
     measurementId: "G-VD85G978G8"
 };
 
-
+const userName = (first, last) => `${first}_${last}@reactws.com`
 
 class Firebase {
 
+    myGroups = [];
+    currentUser = null;
+
     constructor() {
-        console.log("CONSTR--------------------------------")
         if (!firebase.apps.length) {
             app.initializeApp(firebaseConfig);
         }
 
         this.auth = app.auth();
         this.db = app.database();
-
+        this.auth.onAuthStateChanged(
+            authUser => {
+                if (authUser) {
+                    this.user(authUser.uid).on('value', snapshot => {
+                        const userData = snapshot.val();
+                        this.currentUser = userData.username;
+                        console.log("CURREN", this.currentUser)
+                    })
+                } else {
+                    this.currentUser = null;
+                }
+            }
+        )
     }
 
     signUp(firstName, lastName, password, redirect) {
         const username = `${firstName} ${lastName}`;
-        const email = `${firstName}_${lastName}@reactws.com`;
+        const email = userName(firstName, lastName);
         console.log("SIGN IN ", firstName, lastName, password, redirect)
         return this.doCreateUserWithEmailAndPassword(email, password)
             .then(authUser => {
@@ -45,11 +59,17 @@ class Firebase {
                         username,
                         firstName,
                         lastName,
-                        email
+                        email,
+                        groups: [],
                     });
             })
             .then(() => { if (redirect) window.location.replace(redirect) })
             .catch(e => { throw (e.message.replaceAll("email", "user")) })
+    }
+
+    signIn(firstName, lastName, password) {
+        const email = userName(firstName, lastName);
+        this.doSignInWithEmailAndPassword(email, password);
     }
 
     doCreateUserWithEmailAndPassword = (email, password) =>
@@ -62,9 +82,96 @@ class Firebase {
 
     doSignOut = () => this.auth.signOut();
 
+    /**
+     * 
+     * @param {string} name group name
+     * @param {string[]} users group users
+     * @returns 
+     */
+    createGroup = (name, users) => {
+        let currentUI = firebase.auth().currentUser.uid;
+        if (!currentUI || users.length < 1)
+            return;
+        let uniqueUsers = new Set([...users, currentUI])
+        console.log("N", name, "users:", [...uniqueUsers])
+        let newGroupRef = this.groups().push();
+        newGroupRef.set({
+            message: [],
+            name,
+            users: [...uniqueUsers],
+            lastSeen: firebase.database.ServerValue.TIMESTAMP
+        }, (error) => {
+            if (error) {
+                console.log('Data could not be saved.' + error);
+            } else {
+                this.user(currentUI).update({ groups: [newGroupRef.key, ...this.myGroups] });
+            }
+        })
+    }
+
+    registerMyGroups = (onChange) => {
+        let currentUI = firebase.auth().currentUser.uid;
+        if (!currentUI) return;
+        this.groups().on('value', snapshot => {
+            const groupsData = snapshot.val(); console.log(":::", groupsData)
+            let groupsDataList = Object.keys(groupsData).map(k => ({ id: k, ...groupsData[k] }))
+            let myGroups = groupsDataList.filter(g => g.users?.some(id => id === currentUI))
+            onChange(myGroups);
+        })
+    }
+
+    unRegisterMyGroups = () => {
+        this.groups().off();
+    }
+
+    registerUsersList = (onChange) => {
+        console.log("USER REQ", this.users())
+        this.users().on('value', snapshot => {
+            console.log("USER --- ")
+            const users = snapshot.val();
+            let uids = Object.keys(users);
+            let userList = uids.map(id => ({ ...users[id], id }));
+            console.log("USER", userList)
+            onChange(userList);
+        })
+    }
+
+    unRegisterUsersList = () => {
+        this.users().off();
+    }
+
+    sendMessage = (text, groupId) => {
+
+        let currentUI = firebase.auth().currentUser.uid;
+        if (!currentUI) return;
+        let newMsgRef = this.messages(groupId).push();
+        newMsgRef.set({
+            ts: (new Date()).getTime(),//firebase.database.ServerValue.TIMESTAMP,
+            text,
+            user: currentUI,
+            username: this.currentUser,
+
+        })
+        // this.group(groupId).update({
+        //     messages: firebase.firestore.FieldValue.arrayUnion(
+        //         {
+        //             ts: (new Date()).getTime(),//firebase.database.ServerValue.TIMESTAMP,
+        //             text,
+        //             user: currentUI,
+        //             username: this.currentUser,
+
+        //         }
+        //     )
+        // })
+    }
+
     user = uid => this.db.ref(`users/${uid}`);
 
     users = () => this.db.ref('users');
+
+    group = (gid) => this.db.ref(`groups/${gid}`)
+    groups = () => this.db.ref(`groups`)
+    messages = (gid) => this.db.ref(`groups/${gid}/messages`);
 
 }
 
@@ -73,14 +180,18 @@ export default Firebase;
 
 
 /*
+user{
+    myGroups: [gidA,gidB]
+}
 groups{
     groupId:{
-        messages:[{text:"" , user:uid }]
-        users:[user-ids]
+        messages:{[ts:[{text:"" , user:uid }]
+        users:[user-ids],
+        name:string
     }
 }
 
-groupId - 2 types of groups, 
+groupId - 2 types of groups,
     simple chat (id is concatenated user names sorted)
     real group - users+given name
 */

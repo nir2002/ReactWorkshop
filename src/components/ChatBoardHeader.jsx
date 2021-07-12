@@ -7,7 +7,7 @@ export default function ChatHeader({ title, subtitle }) {
       <UserProfileImg src={userPlaceHolder} />
       <div className="chat-messages-header-title">
         <div>{title}</div>
-        <div style={{ fontSize: 12 }}>{subtitle}</div>
+        <div>{subtitle}</div>
       </div>
     </div>
   );
