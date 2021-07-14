@@ -45,6 +45,11 @@ class Firebase {
         )
     }
 
+
+    currentUserId() {
+        return firebase.auth().currentUser.uid;
+    }
+
     signUp(firstName, lastName, password, redirect) {
         const username = `${firstName} ${lastName}`;
         const email = userName(firstName, lastName);
@@ -96,10 +101,10 @@ class Firebase {
         console.log("N", name, "users:", [...uniqueUsers])
         let newGroupRef = this.groups().push();
         newGroupRef.set({
-            message: [],
+            messages: [],
             name,
             users: [...uniqueUsers],
-            lastSeen: firebase.database.ServerValue.TIMESTAMP
+            // lastSeen: firebase.database.ServerValue.TIMESTAMP
         }, (error) => {
             if (error) {
                 console.log('Data could not be saved.' + error);
@@ -109,6 +114,7 @@ class Firebase {
         })
     }
 
+
     registerMyGroups = (onChange) => {
         let currentUI = firebase.auth().currentUser.uid;
         if (!currentUI) return;
@@ -116,6 +122,12 @@ class Firebase {
             const groupsData = snapshot.val(); console.log(":::", groupsData)
             let groupsDataList = Object.keys(groupsData).map(k => ({ id: k, ...groupsData[k] }))
             let myGroups = groupsDataList.filter(g => g.users?.some(id => id === currentUI))
+            myGroups.forEach(group => {
+                if (group && group.messages)
+                    group.messages = Object.values(group.messages).sort((ga, gb) => gb.ts - ga.ts);
+                else
+                    group.messages = [];
+            })
             onChange(myGroups);
         })
     }
@@ -130,9 +142,12 @@ class Firebase {
             console.log("USER --- ")
             const users = snapshot.val();
             let uids = Object.keys(users);
+
             let userList = uids.map(id => ({ ...users[id], id }));
+            let userCopy = {};
+            userList.forEach(u => userCopy[u.id] = u);
             console.log("USER", userList)
-            onChange(userList);
+            onChange(userCopy);
         })
     }
 

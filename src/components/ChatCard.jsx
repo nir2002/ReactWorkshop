@@ -7,7 +7,7 @@ export default function ChatCard({ image, name, lastSeen, onClick, active }) {
     <div className={classes} onClick={onClick}>
       <img src={image ?? userPlaceHolder} alt="user" />
       <div>{name}</div>
-      <div>{new Date(lastSeen).toLocaleDateString("en-US")}</div>
+      <div>{lastSeen ? new Date(lastSeen).toLocaleDateString("en-US") : "Never"}</div>
     </div>
   );
 }

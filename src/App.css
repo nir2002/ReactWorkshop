@@ -129,9 +129,13 @@ body {
   padding-top: 4px;
 }
 
-.chat-messages-header-title div:nth-child(2){
+.chat-messages-header-title div:nth-child(2) {
   color: rgba(0, 0, 0, 0.6);
   font-size: 13px;
+  width: 600px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .user-profile-image {
@@ -147,7 +151,8 @@ body {
   position: relative;
   background-image: url("assets/bg.png");
   background-repeat: repeat;
-  
+  overflow-y: scroll;
+  padding-bottom: 10px;
 }
 
 .chat-messages::after {
@@ -163,6 +168,11 @@ body {
   width: 94%;
 }
 
+.chat-input img{
+  padding-top: 2px;
+  cursor: pointer;
+}
+
 /****** HEADER ********/
 .header {
   height: 59px;
@@ -173,18 +183,27 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-.header img:nth-child(1) {
+.header>img:nth-child(1) {
   width: 40px;
   height: 40px;
   border-radius: 50%;
 }
-.header img:nth-child(2) {
+.header div img {
   width: 24px;
+  height: 24px;
   filter: invert(8%) sepia(9%) saturate(2476%) hue-rotate(147deg)
     brightness(105%) contrast(32%);
   opacity: 0.6;
   border-radius: 50%;
+  margin-right: 20px;
   cursor: pointer;
+}
+
+.header div img:nth-child(2){
+  width: 20px;
+  height: 20px;
+  opacity: 0.9;
+  padding-bottom: 2px;
 }
 
 /****** CHAT SEARCH ******/
@@ -413,8 +432,19 @@ body {
 /* Chat message */
 .message {
   background: white;
-  width: 520px;
+
   margin-left: 87px;
+  border-radius: 7.5px;
+  margin-top: 8px;
+  padding-right: 10px;
+  max-width: 520px;
+  width: fit-content;
+}
+
+.message.my {
+  background: #dcf8c6;
+  margin-left: auto;
+  margin-right: 80px;
   border-radius: 7.5px;
   margin-top: 8px;
 }
@@ -436,13 +466,15 @@ body {
   font-feature-settings: "kern";
   font-size: 14.2px;
   padding: 6px;
+  padding-right: 30px;
 }
 
 .message div:nth-child(3) {
-  font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial, Ubuntu, Cantarell, "Fira Sans", sans-serif;
+  font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial,
+    Ubuntu, Cantarell, "Fira Sans", sans-serif;
   font-feature-settings: "kern";
   font-size: 11px;
-  color: rgba(0,0,0,0.45);
+  color: rgba(0, 0, 0, 0.45);
   width: 98%;
   text-align: right;
   padding: 4px;

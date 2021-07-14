@@ -67,7 +67,7 @@ function AddChatModal({ users, isOpen, onAdd, onClose }) {
         <span>Select group members</span>
       </div>
       <div>
-        {users.map((u) => (
+        {Object.values(users).map((u) => (
           <UserLine
             key={u.id}
             username={u.username}

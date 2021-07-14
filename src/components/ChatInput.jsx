@@ -4,9 +4,18 @@ import sendIcon from "../assets/send.svg";
 
 export default function ChatInput({ onSendChat }) {
   const [message, setMessage] = useState("");
+  let sendMessage = (msg) => {
+    if (sendMessage) {
+      setMessage("");
+      onSendChat(msg);
+    }
+  };
   return (
     <div className="chat-input">
       <Input
+        onKeyPress={(e) => {
+          if (e.key === "Enter") sendMessage(message);
+        }}
         placeholder="Type a message"
         onChange={(e) => {
           setMessage(e.target.value);
@@ -17,10 +26,7 @@ export default function ChatInput({ onSendChat }) {
         src={sendIcon}
         alt="send"
         onClick={() => {
-          if (message) {
-            setMessage("");
-            onSendChat(message);
-          }
+          sendMessage(message);
         }}
       />
     </div>
