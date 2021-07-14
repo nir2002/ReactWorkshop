@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { LabeledInput } from "../components/Input";
 import { useFirebaseContext } from "../lib/Firebase/context";
-import { SIGN_UP_PAGE } from "../lib/Routes"
+import { SIGN_UP_PAGE, HOME_PAGE } from "../lib/Routes"
 
 
 function SignIn() {
     const [formState, setFormState] = useState({});
     let firebase = useFirebaseContext();
     const onChange = (e) => { setFormState(Object.assign({}, formState, { [e.target.name]: e.target.value })) };
-    const onSubmit = ({ firstName, lastName, password }) => firebase.signIn(firstName, lastName, password);
+    const onSubmit = ({ firstName, lastName, password }) => firebase.signIn(firstName, lastName, password, HOME_PAGE);
     //Note that in real life we will avoid strings as name, use const / TS to verify correctness
     return (
         <Form title={"Sign in"} onSubmit={onSubmit} formState={formState} >

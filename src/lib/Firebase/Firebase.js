@@ -72,9 +72,11 @@ class Firebase {
             .catch(e => { throw (e.message.replaceAll("email", "user")) })
     }
 
-    signIn(firstName, lastName, password) {
+    signIn(firstName, lastName, password, redirect) {
         const email = userName(firstName, lastName);
-        this.doSignInWithEmailAndPassword(email, password);
+        this.doSignInWithEmailAndPassword(email, password).then(() => {
+            if (redirect) window.location.replace(redirect);
+        }).catch(e => { throw (e.message.replaceAll("email", "user")) })
     }
 
     doCreateUserWithEmailAndPassword = (email, password) =>
