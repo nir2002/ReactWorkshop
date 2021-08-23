@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
-import userPlaceHolder from "../assets/userPlaceHolder.png";
+import React, { useRef, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import userPlaceHolder from '../assets/userPlaceHolder.png';
 
 /**
  * A correct way to do a modal, with separate dome element
@@ -10,11 +10,11 @@ function M({ children, isOpen }) {
   const [elem, setElem] = useState(null);
 
   useEffect(() => {
-    const MODAL_ID = "modal";
+    const MODAL_ID = 'modal';
     let parent = document.querySelector(`#${MODAL_ID}`);
     if (!parent) {
-      parent = document.createElement("div");
-      parent.setAttribute("id", MODAL_ID);
+      parent = document.createElement('div');
+      parent.setAttribute('id', MODAL_ID);
       document.body.insertBefore(
         parent,
         document.body.lastElementChild.nextElementSibling
@@ -52,7 +52,7 @@ function UserLine({ image, username, onChange }) {
 
 function AddChatModal({ users, isOpen, onAdd, onClose }) {
   const selected = useRef(new Set());
-  const [groupName, setGroupName] = useState("");
+  const [groupName, setGroupName] = useState('');
   return (
     <Modal isOpen={isOpen}>
       <div>
@@ -84,11 +84,11 @@ function AddChatModal({ users, isOpen, onAdd, onClose }) {
         onChange={(e) => setGroupName(e.target.value)}
       />
       <button
-        disabled={!groupName}
+        disabled={!groupName || selected.current.size === 0}
         onClick={() => {
           onAdd(groupName, selected.current);
           selected.current = new Set();
-          setGroupName("");
+          setGroupName('');
         }}
       >
         Create Group
