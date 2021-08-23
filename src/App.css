@@ -125,6 +125,11 @@ body {
 }
 
 .chat-messages-header-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-content: sp;
+  width: 100%;
   margin: 6px;
   padding-top: 4px;
 }
@@ -149,14 +154,14 @@ body {
 .chat-messages {
   flex: 80%;
   position: relative;
-  background-image: url("assets/bg.png");
+  background-image: url('assets/bg.png');
   background-repeat: repeat;
   overflow-y: scroll;
   padding-bottom: 10px;
 }
 
 .chat-messages::after {
-  content: "";
+  content: '';
   top: 0;
   left: 0;
   bottom: 0;
@@ -168,7 +173,7 @@ body {
   width: 94%;
 }
 
-.chat-input img{
+.chat-input img {
   padding-top: 2px;
   cursor: pointer;
 }
@@ -183,7 +188,7 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-.header>img:nth-child(1) {
+.header > img:nth-child(1) {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -199,7 +204,7 @@ body {
   cursor: pointer;
 }
 
-.header div img:nth-child(2){
+.header div img:nth-child(2) {
   width: 20px;
   height: 20px;
   opacity: 0.9;
@@ -303,14 +308,14 @@ body {
 .user-card div:nth-child(2) {
   text-align: left;
   flex-grow: 1;
-  font-family: "Segoe UI", "Helvetica";
+  font-family: 'Segoe UI', 'Helvetica';
   font-size: 17px;
   border-top: 1px rgb(242, 242, 242) solid;
 }
 
 .chat-list > div div:nth-child(3),
 .user-card div:nth-child(3) {
-  font-family: "Segoe UI", "Helvetica";
+  font-family: 'Segoe UI', 'Helvetica';
   font-size: 12px;
   color: rgba(0, 0, 0, 0.45);
   border-top: 1px rgb(242, 242, 242) solid;
@@ -342,7 +347,7 @@ body {
   align-items: center;
   padding: 10px;
   border-top: 1px rgb(242, 242, 242) solid;
-  font-family: "Segoe UI", "Helvetica";
+  font-family: 'Segoe UI', 'Helvetica';
   font-size: 17px;
 }
 
@@ -450,9 +455,9 @@ body {
 }
 
 .message div:first-child {
-  font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial,
-    Ubuntu, Cantarell, "Fira Sans", sans-serif;
-  font-feature-settings: "kern";
+  font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, 'Lucida Grande', Arial,
+    Ubuntu, Cantarell, 'Fira Sans', sans-serif;
+  font-feature-settings: 'kern';
   font-size: 12.8px;
   color: #35cd96;
   font-weight: 700;
@@ -461,18 +466,18 @@ body {
   width: 100%;
 }
 .message div:nth-child(2) {
-  font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial,
-    Ubuntu, Cantarell, "Fira Sans", sans-serif;
-  font-feature-settings: "kern";
+  font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, 'Lucida Grande', Arial,
+    Ubuntu, Cantarell, 'Fira Sans', sans-serif;
+  font-feature-settings: 'kern';
   font-size: 14.2px;
   padding: 6px;
   padding-right: 30px;
 }
 
 .message div:nth-child(3) {
-  font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial,
-    Ubuntu, Cantarell, "Fira Sans", sans-serif;
-  font-feature-settings: "kern";
+  font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, 'Lucida Grande', Arial,
+    Ubuntu, Cantarell, 'Fira Sans', sans-serif;
+  font-feature-settings: 'kern';
   font-size: 11px;
   color: rgba(0, 0, 0, 0.45);
   width: 98%;
