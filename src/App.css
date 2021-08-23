@@ -388,6 +388,11 @@ body {
   background: #20aa9c;
 }
 
+#modal button:disabled,
+.modal button:disabled {
+  background: gray;
+}
+
 #modal > div > span:first-child,
 .modal > div > span:first-child {
   color: #ecfaf5;
